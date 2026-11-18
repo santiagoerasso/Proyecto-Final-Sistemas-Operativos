@@ -114,9 +114,3 @@ GUION_VIDEO.md               Guía de demostración de máximo 10 minutos
 - En Windows + Docker Desktop/WSL2, algunas métricas y etiquetas de cAdvisor pueden faltar por limitaciones
   del sistema/versión. Documentar la observación y verificar el target `cadvisor` antes de concluir.
 - Si hay contenedores del laboratorio anterior ocupando los puertos, deténgalos o cambie el puerto a la izquierda de `:`.
-- Para una entrega reproducible, después de validar el entorno conviene fijar versiones concretas en vez de `latest`.
-
-## Entrega individual
-
-Subir código y README a GitHub; entregar PDF del informe y enlace a video (máximo 10 minutos).
-Cada integrante entrega individualmente los 3 elementos requeridos por la guía; el informe menciona a todos.
