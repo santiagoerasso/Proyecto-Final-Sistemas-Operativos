@@ -70,7 +70,7 @@ k6 run .\pruebas\carga.js
 
 El guion aumenta usuarios virtuales (10 → 30 → 50) y luego desciende a 0.
 Al finalizar, registrar: total de solicitudes, tasa de errores, mediana y p95 de latencia,
-y comparar con Grafana y Prometheus durante la carga. **No inventar resultados**.
+y comparar con Grafana y Prometheus durante la carga.
 
 ## Comprobar el comportamiento ante fallos (adicional)
 
