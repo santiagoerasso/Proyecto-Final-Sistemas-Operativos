@@ -103,4 +103,3 @@ grafana/provisioning/       Data source y proveedor de dashboards
 grafana/dashboards/         9 paneles preconfigurados
 pruebas/carga.js            Prueba de carga k6 desde el host
 ```
-- Si hay contenedores del laboratorio anterior ocupando los puertos, deténgalos o cambie el puerto a la izquierda de `:`.
