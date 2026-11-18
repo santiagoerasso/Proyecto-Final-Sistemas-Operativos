@@ -1,0 +1,114 @@
+name: so-proyecto-final
+
+x-backend-common: &backend-common
+  build:
+    context: ./backend
+  restart: unless-stopped
+  expose:
+    - "5000"
+  networks:
+    - observabilidad
+
+services:
+  backend1:
+    <<: *backend-common
+    environment:
+      INSTANCE_ID: "1"
+
+  backend2:
+    <<: *backend-common
+    environment:
+      INSTANCE_ID: "2"
+
+  backend3:
+    <<: *backend-common
+    environment:
+      INSTANCE_ID: "3"
+
+  nginx:
+    image: nginx:stable-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8888:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    networks:
+      - observabilidad
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:1.5.1
+    restart: unless-stopped
+    command:
+      - --nginx.scrape-uri=http://nginx:8080/stub_status
+    depends_on:
+      - nginx
+    expose:
+      - "9113"
+    networks:
+      - observabilidad
+
+  cadvisor:
+    image: ghcr.io/google/cadvisor:0.55.1
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - "127.0.0.1:8082:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker:/var/lib/docker:ro
+      - /dev/disk:/dev/disk:ro
+    networks:
+      - observabilidad
+
+  prometheus:
+    image: prom/prometheus:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9091:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+      - nginx-exporter
+      - cadvisor
+    networks:
+      - observabilidad
+
+  grafana:
+    image: grafana/grafana:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_USER:-admin}"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_PASSWORD:-cambiar-esta-clave}"
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    depends_on:
+      - prometheus
+    networks:
+      - observabilidad
+
+networks:
+  observabilidad:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

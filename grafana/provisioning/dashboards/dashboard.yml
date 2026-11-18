@@ -1,0 +1,10 @@
+apiVersion: 1
+providers:
+  - name: "Sistemas Operativos"
+    orgId: 1
+    folder: "Proyecto Final SO"
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards
