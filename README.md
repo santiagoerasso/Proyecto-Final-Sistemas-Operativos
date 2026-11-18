@@ -96,19 +96,11 @@ docker compose down
 ## Estructura
 
 ```text
-backend/                     API, Dockerfile y dependencias
-nginx/nginx.conf             Balanceo round-robin y stub_status
-prometheus/prometheus.yml    Configuración de 6 targets
-  grafana/provisioning/       Data source y proveedor de dashboards
-  grafana/dashboards/         9 paneles preconfigurados
-pruebas/carga.js             Prueba de carga k6 desde el host
+backend/                    API, Dockerfile y dependencias
+nginx/nginx.conf            Balanceo round-robin y stub_status
+prometheus/prometheus.yml   Configuración de 6 targets
+grafana/provisioning/       Data source y proveedor de dashboards
+grafana/dashboards/         9 paneles preconfigurados
+pruebas/carga.js            Prueba de carga k6 desde el host
 ```
-
-## Notas técnicas
-
-- Este despliegue es para un **entorno académico local**, no un sistema de producción.
-- Los servicios accesibles desde el host se vinculan a `127.0.0.1` para evitar exposición a la red externa.
-- cAdvisor requiere acceso privilegiado a métricas del daemon Docker; úsese solo en un host de confianza.
-- En Windows + Docker Desktop/WSL2, algunas métricas y etiquetas de cAdvisor pueden faltar por limitaciones
-  del sistema/versión. Documentar la observación y verificar el target `cadvisor` antes de concluir.
 - Si hay contenedores del laboratorio anterior ocupando los puertos, deténgalos o cambie el puerto a la izquierda de `:`.
