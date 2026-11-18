@@ -102,8 +102,6 @@ prometheus/prometheus.yml    Configuración de 6 targets
   grafana/provisioning/       Data source y proveedor de dashboards
   grafana/dashboards/         9 paneles preconfigurados
 pruebas/carga.js             Prueba de carga k6 desde el host
-INFORME_BORRADOR.md          Guía para completar informe con evidencias reales
-GUION_VIDEO.md               Guía de demostración de máximo 10 minutos
 ```
 
 ## Notas técnicas
