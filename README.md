@@ -181,7 +181,7 @@ docker compose down
 README.md                            Guía de reproducción
 backend/Dockerfile                   Imagen de la aplicación
 backend/app.py                       API Flask, endpoints y métricas
-backend/requirements.txt            Dependencias Python
+backend/requirements.txt             Dependencias Python
 docker-compose.yml                   Definición de servicios y red
 nginx/nginx.conf                     Proxy inverso, round-robin y stub_status
 prometheus/prometheus.yml            Targets de monitoreo
