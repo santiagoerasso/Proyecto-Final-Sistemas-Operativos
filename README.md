@@ -23,7 +23,7 @@ docker compose up -d --build
 docker compose ps
 ```
 
-El archivo `.env` es local y está excluido mediante `.gitignore`. **No lo publiques**. La primera compilación puede tardar mientras se descargan imágenes y dependencias. Si necesitas investigar un fallo:
+El archivo `.env` es local y está excluido mediante `.gitignore`. La primera compilación puede tardar mientras se descargan imágenes y dependencias. Si necesitas investigar un fallo:
 
 ```powershell
 docker compose logs --tail=50
